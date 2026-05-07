@@ -12,19 +12,19 @@ export default function Navbar() {
   const [currentUser, setCurrentUser] = useState(null);
   const router = useRouter();
 
-useEffect(() => {
-  function checkUser() {
-    const stored = sessionStorage.getItem("user");
-    setCurrentUser(stored ? JSON.parse(stored) : null);
-  }
-  checkUser();
-  window.addEventListener('focus', checkUser);
-  window.addEventListener('userLogin', checkUser); // 👈 add this
-  return () => {
-    window.removeEventListener('focus', checkUser);
-    window.removeEventListener('userLogin', checkUser); // 👈 add this
-  };
-}, []);
+  useEffect(() => {
+    function checkUser() {
+      const stored = sessionStorage.getItem("user");
+      setCurrentUser(stored ? JSON.parse(stored) : null);
+    }
+    checkUser();
+    window.addEventListener('focus', checkUser);
+    window.addEventListener('userLogin', checkUser);
+    return () => {
+      window.removeEventListener('focus', checkUser);
+      window.removeEventListener('userLogin', checkUser);
+    };
+  }, []);
 
   function onLogout() {
     sessionStorage.removeItem("user");
@@ -34,28 +34,28 @@ useEffect(() => {
 
   return (
     <nav>
-      <a href="/">🎌 MoodAnime</a>
-      <a href="/anime">Browse</a>
+      <Link href="/">🎌 MoodAnime</Link>
+      <Link href="/anime">Browse</Link>
       {currentUser && (
-        <a href="/anime/new">+ Add Anime</a>
+        <Link href="/anime/new">+ Add Anime</Link>
       )}
       {currentUser && (
-        <a href="/users">Mooders</a>
+        <Link href="/users">Mooders</Link>
       )}
       {currentUser?.is_admin === 1 && (
-          <a href="/admin">⚙️ Admin</a>
-        )}
+        <Link href="/admin">⚙️ Admin</Link>
+      )}
       <div style={{marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 12}}>
         {currentUser ? (
           <>
-            <img src={currentUser.profileimage || "/default-avatar.png"} width={35} height={35} style={{borderRadius: '50%', border: '2px solid #ff2d2d'}}/>
-            <a href={`/users/${currentUser.id}`}>{currentUser.username}</a>
+            <img src={currentUser.profileimage || "/default-avatar.png"} width={35} height={35} style={{borderRadius: '50%', border: '2px solid #ff2d2d'}} alt="profile"/>
+            <Link href={`/users/${currentUser.id}`}>{currentUser.username}</Link>
             <button onClick={onLogout} style={{padding: '4px 12px'}}>Logout</button>
           </>
         ) : (
           <>
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
+            <Link href="/login">Login</Link>
+            <Link href="/register">Register</Link>
           </>
         )}
       </div>
