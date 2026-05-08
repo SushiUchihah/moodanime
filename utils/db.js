@@ -2,7 +2,7 @@
 // Creates a MySQL connection pool to TiDB cloud database
 // Uses environment variables from .env.local for security
 // mysqlPool is imported by all API routes
-const mysql = require('mysql2');
+import mysql from 'mysql2';
 
 export const mysqlPool = mysql.createPool({
   host: process.env.DB_HOST,
