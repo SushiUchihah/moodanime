@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 import { mysqlPool } from "@/utils/db";
 
 export async function GET(_request, { params }) {
-  const { anime_id } = params;
+  const { anime_id } =await params;
   const promisePool = mysqlPool.promise();
   // Count reactions grouped by type
   const [rows] = await promisePool.query(
@@ -21,7 +21,7 @@ export async function GET(_request, { params }) {
 
 export async function POST(request, { params }) {
   try {
-    const { anime_id } = params;
+    const { anime_id } =await params;
     const body = await request.json();
     const { reaction_type, user_id } = body;
     const promisePool = mysqlPool.promise();

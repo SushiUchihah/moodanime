@@ -6,7 +6,7 @@ import { mysqlPool } from "@/utils/db";
 
 //get username + comments
 export async function GET(_request, { params }) {
-  const { anime_id } = params;
+  const { anime_id } = await params;
   const promisePool = mysqlPool.promise();
   const [rows] = await promisePool.query(
     `SELECT comments.*, users.username 
@@ -19,7 +19,7 @@ export async function GET(_request, { params }) {
 
 export async function POST(request, { params }) {
   try {
-    const { anime_id } = params;
+    const { anime_id } = await params;
     const body = await request.json();
     const { comment_text, user_id } = body;
     const promisePool = mysqlPool.promise();
