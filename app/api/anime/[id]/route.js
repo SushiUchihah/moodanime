@@ -7,7 +7,7 @@ import { mysqlPool } from "@/utils/db";
 
 //GET/api/anime
 export async function GET(_request, { params }) {
-  const { id } = params;
+  const { id } = await params;
   const promisePool = mysqlPool.promise();
 
   //fetch anime
